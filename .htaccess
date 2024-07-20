@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /juanserrano/
+    RewriteBase /admiflow/
 
     # Redirigir específicamente para extensiones .html
     RewriteCond %{REQUEST_FILENAME} !-f
