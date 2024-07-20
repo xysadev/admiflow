@@ -63,6 +63,3 @@ class Config
         return self::$config[$key] ?? null;
     }
 }
-
-// Cargar la configuración al incluir este archivo
-Config::load();

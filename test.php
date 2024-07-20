@@ -2,7 +2,10 @@
 
 // Cargar el autoloader de Composer
 require 'vendor/autoload.php';
+
+// Usar la clase Config para cargar las configuraciones desde el archivo .env
 use Xysdev\Admiflow\Config;
+Config::load();
 
 // Los archivos globales ya se cargan automáticamente
 // No es necesario incluirlos manualmente aquí
