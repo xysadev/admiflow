@@ -1,0 +1,18 @@
+{
+    "name": "xysdev/admiflow",
+    "description": "Sistema de gestión de flujos de trabajo y administración de datos para aplicaciones PHP, diseñado para integrarse con bases de datos SQL Server y facilitar la administración de tareas entre áreas como admisiones, liquidación y facturación.",
+    "autoload": {
+        "psr-4": {
+            "Xysdev\\Admiflow\\": "system/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Salvay",
+            "email": "david@xysdev.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
