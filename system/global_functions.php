@@ -1,6 +1,6 @@
 <?php
 
-use System\Config;
+use Xysdev\Admiflow\Config;
 
 /**
  * Get the base URL of the application.
@@ -11,6 +11,7 @@ function base_url() {
     // URL base de tu aplicación
     return 'http://localhost/admiflow/';
 }
+
 /**
  * Redirect to a different URL.
  *
@@ -95,6 +96,50 @@ function include_layout(string $filePath): void {
     if (file_exists($fullPath)) {
         include $fullPath;
     } else {
-        echo "Error: File not found - $fullPath";
+        echo "<p>Error: File not found - $fullPath</p>";
     }
+}
+
+/**
+ * Validate an email address.
+ *
+ * @param string $email
+ * @return bool
+ */
+function validate_email($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+/**
+ * Generate a URL-friendly slug from a string.
+ *
+ * @param string $string
+ * @return string
+ */
+function generate_slug($string) {
+    return strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $string));
+}
+
+/**
+ * Check if a directory exists, and create it if it does not.
+ *
+ * @param string $directory
+ * @return void
+ */
+function check_or_create_directory($directory) {
+    if (!is_dir($directory)) {
+        mkdir($directory, 0777, true);
+    }
+}
+
+/**
+ * Format a date.
+ *
+ * @param string $date
+ * @param string $format
+ * @return string
+ */
+function format_date($date, $format = 'Y-m-d H:i:s') {
+    $dateTime = new DateTime($date);
+    return $dateTime->format($format);
 }

@@ -4,7 +4,11 @@
     "autoload": {
         "psr-4": {
             "Xysdev\\Admiflow\\": "system/"
-        }
+        },
+        "files": [
+            "system/global_functions.php",
+            "system/xy.php"
+        ]
     },
     "authors": [
         {
@@ -13,6 +17,6 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.4"
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace System;
+namespace Xysdev\Admiflow;
 
 use PDO;
 use PDOException;
@@ -11,11 +11,14 @@ class Database
 
     public function __construct()
     {
-        $dsn = 'sqlsrv:Server=' . Config::get('db_host') . ';Database=' . Config::get('db_name');
+        // Construir el DSN utilizando la configuración
+        $trustServerCertificate = Config::get('db_trust_server_certificate') === 'true' ? 'TrustServerCertificate=true' : '';
+        $dsn = 'sqlsrv:Server=' . Config::get('db_host') . ';Database=' . Config::get('db_name') . ($trustServerCertificate ? ";$trustServerCertificate" : '');
         $username = Config::get('db_user');
         $password = Config::get('db_pass');
 
         try {
+            // Inicializar PDO con el DSN y las credenciales
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
