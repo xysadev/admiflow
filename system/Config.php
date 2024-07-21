@@ -5,6 +5,10 @@ namespace Xysdev\Admiflow;
 class Config
 {
     private static $config = [];
+    private static $templateConfig = [
+        'logo_url' => '/path/to/default/logo.png', // Valor predeterminado del logo
+        'footer_text' => 'Desarrollado por Xysdev' // Texto de pie de página predeterminado
+    ];
 
     /**
      * Cargar la configuración y las variables de entorno.
@@ -26,7 +30,7 @@ class Config
             'DB_USER', 
             'DB_PASS',
             'DB_TRUST_SERVER_CERTIFICATE',
-            'TITLE_PAGE' 
+            'TITLE_PAGE'
         ];
         foreach ($requiredEnvVars as $var) {
             if (empty($_ENV[$var])) {
@@ -63,5 +67,27 @@ class Config
     public static function get($key)
     {
         return self::$config[$key] ?? null;
+    }
+
+    /**
+     * Obtener una configuración del template.
+     *
+     * @param string $key La clave de configuración del template.
+     * @return mixed El valor de la configuración del template, o null si la clave no existe.
+     */
+    public static function getTemplateConfig($key)
+    {
+        return self::$templateConfig[$key] ?? null;
+    }
+
+    /**
+     * Establecer una configuración del template.
+     *
+     * @param string $key La clave de configuración del template.
+     * @param mixed $value El valor de la configuración del template.
+     */
+    public static function setTemplateConfig($key, $value)
+    {
+        self::$templateConfig[$key] = $value;
     }
 }

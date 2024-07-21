@@ -3,10 +3,14 @@
   require 'vendor/autoload.php';
 
   use Xysdev\Admiflow\Config;
+  
   Config::load();
 
- ?>
+  Config::setTemplateConfig('logo_url', '/path/to/custom/logo.png'); // Ejemplo de ajuste
 
+  $logoUrl = Config::getTemplateConfig('logo_url');
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1125,20 +1129,26 @@
                     <div class="content p-4 d-flex flex-column-fluid">
                         <div class="container-fluid px-0">
                           <h5>Content here...</h5>
+                          <p><?php echo $logoUrl; ?></p>
                         </div>
                     </div>
                     <!--//Page content End//-->
 
                    <!--//Page-footer//-->
-                   <footer class="pb-4">
-                      <div class="container-fluid px-4">
-                        <span class="d-block lh-sm small text-muted text-end"><?= config('title_page'); ?> &copy;
-                          <script>
-                            document.write(new Date().getFullYear())
-                          </script>. <?= get_developer_credit(); ?>
-                        </span>
-                      </div>
-                    </footer>
+           <footer class="pb-4">
+  <div class="container-fluid px-4">
+    <span class="d-block lh-sm small text-muted text-end">
+      <?= config('title_page'); ?> &copy;
+      <script>
+        document.write(new Date().getFullYear())
+      </script>
+    </span>
+    <span class="d-block lh-sm small text-muted text-end">
+      <?= get_developer_credit(); ?>
+    </span>
+  </div>
+</footer>
+
                     <!--/.Page Footer End-->
                 </main>
                 <!--///////////Page content wrapper End///////////////-->
