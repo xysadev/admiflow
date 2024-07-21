@@ -85,6 +85,25 @@ function generate_password($length = 12) {
     return substr(str_shuffle($chars), 0, $length);
 }
 
+
+/**
+ * Get the URL of an asset file (CSS or JS).
+ *
+ * @param string $filePath The path to the asset file relative to the base URL.
+ * @return string The URL of the asset file.
+ */
+function include_assets(string $filePath): string {
+    $baseURL = base_url(); // Cambia esto a la URL base de tu proyecto
+    $fullPath = __DIR__ . '/../' . $filePath;
+    
+    if (file_exists($fullPath)) {
+        return $baseURL . $filePath;
+    } else {
+        return "Error: File not found - $fullPath";
+    }
+}
+
+
 /**
  * Include a layout file.
  *

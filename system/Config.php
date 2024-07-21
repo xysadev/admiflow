@@ -25,7 +25,8 @@ class Config
             'DB_NAME', 
             'DB_USER', 
             'DB_PASS',
-            'DB_TRUST_SERVER_CERTIFICATE' 
+            'DB_TRUST_SERVER_CERTIFICATE',
+            'TITLE_PAGE' 
         ];
         foreach ($requiredEnvVars as $var) {
             if (empty($_ENV[$var])) {
@@ -41,6 +42,7 @@ class Config
             'db_user' => $_ENV['DB_USER'],
             'db_pass' => $_ENV['DB_PASS'],
             'db_trust_server_certificate' => $_ENV['DB_TRUST_SERVER_CERTIFICATE'],
+            'title_page' => $_ENV['TITLE_PAGE'],
         ];
 
         // Cargar configuración adicional desde un archivo si se proporciona
