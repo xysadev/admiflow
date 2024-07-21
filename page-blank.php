@@ -4,11 +4,15 @@
 
   use Xysdev\Admiflow\Config;
   
+  // Cargar la configuración
   Config::load();
 
+  // Ajustar configuraciones del template
   Config::setTemplateConfig('logo_url', '/path/to/custom/logo.png'); // Ejemplo de ajuste
 
+  // Obtener valores de configuración
   $logoUrl = Config::getTemplateConfig('logo_url');
+  $pageTitle = Config::getTemplateConfig('page_title');
 
  ?>
 <!DOCTYPE html>
@@ -17,7 +21,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blank, empty page - <?= config('title_page'); ?></title>
+        <title>Blank, empty page - <?= $pageTitle; ?></title>
 
         <!--Simplebar css-->
         <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/vendor/css/simplebar.min.css', 'css'); ?>">
@@ -1138,7 +1142,7 @@
            <footer class="pb-4">
   <div class="container-fluid px-4">
     <span class="d-block lh-sm small text-muted text-end">
-      <?= config('title_page'); ?> &copy;
+      <?= $pageTitle; ?> &copy;
       <script>
         document.write(new Date().getFullYear())
       </script>

@@ -6,8 +6,8 @@ class Config
 {
     private static $config = [];
     private static $templateConfig = [
-        'logo_url' => '/path/to/default/logo.png', // Valor predeterminado del logo
-        'footer_text' => 'Desarrollado por Xysdev' // Texto de pie de página predeterminado
+        'page_title' => 'Admiflow', // Título de la página
+        'logo_url' => '/path/to/default/logo.png' // URL del logo
     ];
 
     /**
@@ -29,8 +29,7 @@ class Config
             'DB_NAME', 
             'DB_USER', 
             'DB_PASS',
-            'DB_TRUST_SERVER_CERTIFICATE',
-            'TITLE_PAGE'
+            'DB_TRUST_SERVER_CERTIFICATE'
         ];
         foreach ($requiredEnvVars as $var) {
             if (empty($_ENV[$var])) {
@@ -46,7 +45,6 @@ class Config
             'db_user' => $_ENV['DB_USER'],
             'db_pass' => $_ENV['DB_PASS'],
             'db_trust_server_certificate' => $_ENV['DB_TRUST_SERVER_CERTIFICATE'],
-            'title_page' => $_ENV['TITLE_PAGE'],
         ];
 
         // Cargar configuración adicional desde un archivo si se proporciona
