@@ -13,7 +13,7 @@
   // Obtener valores de configuración
   $logoUrl = Config::getTemplateConfig('logo_url');
   $pageTitle = Config::getTemplateConfig('page_title');
-
+                     $teeest = get_license_key();
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,19 +24,19 @@
         <title>Blank, empty page - <?= $pageTitle; ?></title>
 
         <!--Simplebar css-->
-        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/vendor/css/simplebar.min.css', 'css'); ?>">
+        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/vendor/css/simplebar.min.css'); ?>">
 
         <!--Choices css-->
-        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/vendor/css/choices.min.css', 'css'); ?>">
+        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/vendor/css/choices.min.css'); ?>">
 
         <!--Font awesome icons-->
-        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css', 'css'); ?>">
+        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css'); ?>">
         <!--Google web fonts-->
         <link rel="preconnect" href="https://fonts.googleapis.com/">
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&amp;display=swap" rel="stylesheet"> 
         <!--Main style-->
-        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/css/style.min.css', 'css'); ?>" id="switchThemeStyle">
+        <link rel="stylesheet" href="<?= include_assets('template/ui8/assets/css/style.min.css'); ?>" id="switchThemeStyle">
     </head>
 
     <body>
