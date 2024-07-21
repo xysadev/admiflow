@@ -1,2 +1,164 @@
 <?php
- use Xysdev\Admiflow\Config; goto ZPEqb; UYz4n: const CACHE_EXPIRY_TIME = 3600; goto Mp_4o; ZruI5: function get_developer_credit() : string { return "\120\157\x77\145\x72\x65\144\x20\x62\171\40\74\141\x20\x68\x72\145\146\x3d\x22\150\x74\x74\160\x73\72\57\57\x78\x79\x73\x64\x65\x76\56\143\157\x6d\57\x22\x20\x74\141\162\147\x65\x74\75\x22\137\142\154\141\156\x6b\42\76\130\171\x73\x44\x65\x76\74\57\x61\x3e"; } goto jwJ09; SffbS: const CACHE_FILE = __DIR__ . "\57\x63\141\x63\x68\x65\57\154\x69\x63\x65\x6e\163\145\56\141\144\155\151\146\x6c\157\167"; goto UYz4n; JDJcB: const LICENSE_SERVER_URL = "\150\164\164\x70\x73\x3a\57\x2f\x78\x79\x73\x64\145\x76\x2e\x63\157\x6d\57\x61\160\151\57\166\x65\162\x69\x66\x79\x5f\x6c\151\x63\145\156\x73\145"; goto SffbS; h47D5: if (!$licenseData["\166\141\154\151\144"]) { die("\114\x69\143\x65\x6e\143\x69\141\x20\x69\156\x76\xc3\241\x6c\151\x64\x61\x2e\x20\x4c\141\40\141\x70\x6c\x69\143\x61\x63\151\xc3\xb3\x6e\40\x6e\157\x20\x70\165\x65\144\x65\40\x63\x6f\156\164\151\156\165\x61\x72\x2e"); } goto twDxR; d0CJn: function get_license_key() : string { return Config::get("\x6c\x69\143\145\x6e\163\x65\x5f\153\145\171") ?? ''; } goto yaCx3; twDxR: $user_id = $licenseData["\x75\163\x65\162\x5f\151\144"]; goto iIgCC; yaCx3: function get_cached_license() : array { if (!file_exists(CACHE_FILE)) { save_license_cache(array("\x74\151\x6d\145\x73\164\141\x6d\x70" => 0, "\166\141\x6c\151\144" => false, "\x75\163\x65\162\137\151\144" => null)); return array("\x74\151\x6d\145\x73\164\x61\x6d\160" => 0, "\x76\141\154\151\144" => false, "\x75\x73\x65\162\x5f\151\144" => null); } $content = file_get_contents(CACHE_FILE); $lines = explode("\12", trim($content)); $cache = array(); foreach ($lines as $line) { list($key, $value) = explode("\x3a\40", $line, 2); $cache[$key] = trim($value); } return array("\x74\x69\x6d\x65\x73\x74\141\x6d\160" => (int) ($cache["\x74\151\x6d\x65\x73\x74\x61\x6d\x70"] ?? 0), "\166\141\154\151\x64" => filter_var($cache["\166\141\154\x69\144"] ?? false, FILTER_VALIDATE_BOOLEAN), "\x75\163\x65\162\137\151\144" => $cache["\x75\163\145\x72\x5f\x69\144"] ?? null); } goto gV_HS; wmoOM: function is_license_cache_valid() : bool { $cache = get_cached_license(); return time() - $cache["\164\151\155\x65\163\164\x61\155\x70"] < CACHE_EXPIRY_TIME && $cache["\x76\x61\154\x69\144"]; } goto FAmJ5; gV_HS: function save_license_cache(array $data) : void { $content = sprintf("\x74\151\155\145\163\x74\x61\155\x70\x3a\40\x25\144\12\x76\x61\154\151\144\72\40\45\x73\xa\x75\163\x65\162\137\151\x64\x3a\40\45\163", time(), $data["\166\141\x6c\x69\x64"] ? "\164\162\x75\145" : "\x66\x61\x6c\x73\145", $data["\165\163\145\x72\x5f\151\144"] ?? "\156\x75\x6c\154"); file_put_contents(CACHE_FILE, $content); } goto dvrg_; FAmJ5: if (!is_license_cache_valid()) { $licenseData = check_license(); save_license_cache($licenseData); } else { $licenseData = get_cached_license(); } goto UtUh0; dvrg_: function check_license() : array { $licenseKey = get_license_key(); error_log("\x4c\151\143\x65\156\x73\145\40\x4b\x65\x79\72\40" . $licenseKey); if (empty($licenseKey)) { return array("\166\141\154\x69\144" => false, "\165\x73\145\x72\137\151\x64" => null); } $context = stream_context_create(array("\150\164\164\x70" => array("\155\145\x74\x68\157\x64" => "\107\x45\124", "\150\x65\x61\x64\x65\162" => "\101\x63\x63\x65\x70\164\x3a\40\141\160\x70\154\x69\x63\141\x74\x69\x6f\156\57\152\x73\157\156", "\x74\x69\x6d\x65\x6f\165\x74" => 10))); $url = LICENSE_SERVER_URL . "\x3f\x6b\145\x79\x3d" . urlencode($licenseKey); $response = @file_get_contents($url, false, $context); if ($response === false) { error_log("\110\124\x54\120\x20\x45\162\162\157\162\x3a\40\125\156\141\142\154\x65\x20\x74\157\x20\x66\145\164\143\150\40\x72\145\163\160\157\156\163\145\40\x66\162\157\155\40\125\x52\x4c\x3a\x20" . $url); return array("\x76\141\x6c\151\144" => false, "\x75\163\x65\162\137\151\144" => null); } $data = json_decode($response, true); if (json_last_error() !== JSON_ERROR_NONE) { error_log("\x4a\123\117\116\x20\104\x65\x63\x6f\144\145\40\105\x72\162\x6f\162\72\40" . json_last_error_msg()); return array("\x76\141\x6c\x69\144" => false, "\165\x73\x65\x72\x5f\151\144" => null); } error_log("\104\x65\143\157\144\145\x64\40\x44\x61\x74\141\x3a\x20" . print_r($data, true)); return array("\x76\x61\x6c\151\144" => isset($data["\x76\x61\154\x69\x64"]) && $data["\x76\x61\154\151\x64"] === true, "\165\x73\x65\x72\x5f\x69\144" => $data["\165\163\145\162\137\151\x64"] ?? null); } goto wmoOM; Mp_4o: const REQUIRED_USER_ID = 20; goto d0CJn; UtUh0: error_log("\x4c\151\143\145\156\x73\x65\x20\x44\x61\164\141\72\x20" . print_r($licenseData, true)); goto h47D5; iIgCC: if ($licenseData["\165\x73\145\162\x5f\x69\144"] != REQUIRED_USER_ID) { die("\114\151\143\145\x6e\x63\x69\x61\x20\151\156\x76\303\xa1\x6c\x69\144\x61\x2e\40\114\141\40\x61\160\x6c\151\x63\141\x63\x69\xc3\xb3\156\40\x6e\157\x20\160\x75\145\x64\145\40\143\157\x6e\x74\x69\x6e\165\x61\162\x2e\x2e\x2e"); } goto ZruI5; ZPEqb: Config::load(); goto JDJcB; jwJ09: ?>
+
+use Xysdev\Admiflow\Config;
+
+// Inicializa la configuración
+Config::load();
+
+// URL del servidor de licencias en XysDev
+const LICENSE_SERVER_URL = 'https://xysdev.com/api/verify_license';
+const CACHE_FILE = __DIR__ . '/cache/license.admiflow';  // Ruta al archivo de caché
+const CACHE_EXPIRY_TIME = 3600;  // 1 hora en segundos
+const REQUIRED_USER_ID = 20;    // ID de usuario requerido
+
+/**
+ * Obtiene la clave de licencia desde la configuración.
+ *
+ * @return string La clave de licencia.
+ */
+function get_license_key(): string {
+    return Config::get('license_key') ?? '';  // Asegúrate de que nunca sea null
+}
+
+/**
+ * Lee el archivo de caché de licencia.
+ *
+ * @return array Contiene 'timestamp', 'valid' y 'user_id'.
+ */
+function get_cached_license(): array {
+    if (!file_exists(CACHE_FILE)) {
+        // Si el archivo no existe, se crea uno nuevo con datos por defecto
+        save_license_cache([
+            'timestamp' => 0,
+            'valid' => false,
+            'user_id' => null
+        ]);
+        return ['timestamp' => 0, 'valid' => false, 'user_id' => null];
+    }
+
+    $content = file_get_contents(CACHE_FILE);
+    $lines = explode("\n", trim($content));
+
+    $cache = [];
+    foreach ($lines as $line) {
+        list($key, $value) = explode(': ', $line, 2);
+        $cache[$key] = trim($value);
+    }
+
+    return [
+        'timestamp' => (int)($cache['timestamp'] ?? 0),
+        'valid' => filter_var($cache['valid'] ?? false, FILTER_VALIDATE_BOOLEAN),
+        'user_id' => $cache['user_id'] ?? null
+    ];
+}
+
+/**
+ * Guarda los datos de la licencia en el archivo de caché.
+ *
+ * @param array $data Los datos de la licencia a guardar.
+ */
+function save_license_cache(array $data): void {
+    $content = sprintf(
+        "timestamp: %d\nvalid: %s\nuser_id: %s",
+        time(),
+        $data['valid'] ? 'true' : 'false',
+        $data['user_id'] ?? 'null'
+    );
+    file_put_contents(CACHE_FILE, $content);
+}
+
+/**
+ * Verifica la licencia consultando el servidor de licencias.
+ *
+ * @return array Contiene 'valid' y 'user_id' si la licencia es válida.
+ */
+function check_license(): array {
+    $licenseKey = get_license_key();
+
+    // Depuración
+    error_log("License Key: " . $licenseKey);
+
+    if (empty($licenseKey)) {
+        // La clave de licencia no está configurada
+        return ['valid' => false, 'user_id' => null];
+    }
+
+    // Configuración del contexto de stream
+    $context = stream_context_create([
+        'http' => [
+            'method' => 'GET',
+            'header' => 'Accept: application/json',
+            'timeout' => 10
+        ]
+    ]);
+
+    // Realizar la solicitud
+    $url = LICENSE_SERVER_URL . '?key=' . urlencode($licenseKey);
+    $response = @file_get_contents($url, false, $context);
+
+    // Depuración
+    if ($response === false) {
+        error_log("HTTP Error: Unable to fetch response from URL: " . $url);
+        return ['valid' => false, 'user_id' => null];
+    }
+
+    // Decodifica la respuesta JSON
+    $data = json_decode($response, true);
+
+    // Depuración
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("JSON Decode Error: " . json_last_error_msg());
+        return ['valid' => false, 'user_id' => null];
+    }
+
+    error_log("Decoded Data: " . print_r($data, true));
+
+    // Verifica si la respuesta indica que la licencia es válida
+    return [
+        'valid' => isset($data['valid']) && $data['valid'] === true,
+        'user_id' => $data['user_id'] ?? null
+    ];
+}
+
+/**
+ * Verifica si la caché de licencia es válida.
+ *
+ * @return bool True si la caché es válida y no ha expirado.
+ */
+function is_license_cache_valid(): bool {
+    $cache = get_cached_license();
+    return (time() - $cache['timestamp']) < CACHE_EXPIRY_TIME && $cache['valid'];
+}
+
+// Verifica la licencia al iniciar el script
+
+// if (!is_license_cache_valid()) {
+//     $licenseData = check_license();
+//     save_license_cache($licenseData);
+// } else {
+//     $licenseData = get_cached_license();
+// }
+
+
+// if (!$licenseData['valid']) {
+//     die('Licencia inválida. La aplicación no puede continuar.');
+// }
+
+// $user_id = $licenseData['user_id'];
+
+// if ($licenseData['user_id'] != REQUIRED_USER_ID) {
+// 	die('Licencia inválida. La aplicación no puede continuar...');
+// }
+
+// El resto del código de la aplicación...
+
+/**
+ * Genera el contenido del pie de página.
+ *
+ * @return string El contenido HTML del pie de página.
+ */
+function get_developer_credit(): string {
+    return 'Powered by <a href="https://xysdev.com/" target="_blank">XysDev</a>';
+}
+
+?>
