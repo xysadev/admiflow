@@ -1,6 +1,6 @@
 <?php
 
-use Xysdev\Admiflow\Config;
+namespace Xysdev\Admiflow;
 
 /**
  * Get the base URL of the application.
