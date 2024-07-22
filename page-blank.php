@@ -4,9 +4,6 @@
 
   use Xysdev\Admiflow\Config;
 
-  // Ajustar configuraciones del template
-  //Config::setTemplateConfig('logo_url', '/path/to/custom/logo.png'); // Ejemplo de ajuste
-
   // Obtener valores de configuración
   $pageTitle = Config::getTemplateConfig('app_name');
 
