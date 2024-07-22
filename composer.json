@@ -3,7 +3,8 @@
     "description": "Sistema de gestión de flujos de trabajo y administración de datos para aplicaciones PHP, diseñado para integrarse con bases de datos SQL Server y facilitar la administración de tareas entre áreas como admisiones, liquidación y facturación.",
     "autoload": {
         "psr-4": {
-            "Xysdev\\Admiflow\\": "system/"
+            "Xysdev\\Admiflow\\": "system/",
+            "Xysdev\\Admiflow\\User\\": "module/user/"
         },
         "files": [
             "system/global_functions.php",

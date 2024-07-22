@@ -21,6 +21,7 @@ class ComposerStaticInit7bba0c4136e2fa03d5e65664efea078d
         ),
         'X' => 
         array (
+            'Xysdev\\Admiflow\\User\\' => 21,
             'Xysdev\\Admiflow\\' => 16,
         ),
         'S' => 
@@ -59,6 +60,10 @@ class ComposerStaticInit7bba0c4136e2fa03d5e65664efea078d
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
+        ),
+        'Xysdev\\Admiflow\\User\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/module/user',
         ),
         'Xysdev\\Admiflow\\' => 
         array (
