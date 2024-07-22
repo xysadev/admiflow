@@ -44,7 +44,7 @@ class Config
             'db_trust_server_certificate' => $_ENV['DB_TRUST_SERVER_CERTIFICATE'],
         ];
 
-        // Definir la configuración de la plantilla
+        // Configuración general
         self::$templateConfig = [
             'app_name' => 'Admiflow', 
             'logo_url' => self::$config['base_url'] . '/template/ui8/assets/media/logo.svg',
