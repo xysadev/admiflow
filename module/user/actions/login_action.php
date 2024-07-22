@@ -1,6 +1,6 @@
 <?php
 
-require '../../../vendor/autoload.php'; // Asegúrate de que la ruta sea correcta
+require '../../../vendor/autoload.php';
 
 use Xysdev\Admiflow\User\User;
 
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($authenticatedUser) {
         $_SESSION['user_id'] = $authenticatedUser['id'];
         $_SESSION['role'] = $authenticatedUser['role'];
-        echo json_encode(['success' => true]); // Respuesta en formato JSON
+        echo json_encode(['success' => true]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Correo o contraseña incorrectos.']);
     }
