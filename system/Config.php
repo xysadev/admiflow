@@ -5,10 +5,7 @@ namespace Xysdev\Admiflow;
 class Config
 {
     private static $config = [];
-    private static $templateConfig = [
-        'page_title' => 'Admiflow', // Título de la página
-        'logo_url' => '/path/to/default/logo.png' // URL del logo
-    ];
+    private static $templateConfig = [];
 
     /**
      * Cargar la configuración y las variables de entorno.
@@ -39,12 +36,19 @@ class Config
 
         // Asignar variables de entorno a la configuración
         self::$config = [
-            'base_url' => $_ENV['BASE_URL'],
+            'base_url' => rtrim($_ENV['BASE_URL'], '/'), // Asegurarse de que no termine con '/'
             'db_host' => $_ENV['DB_HOST'],
             'db_name' => $_ENV['DB_NAME'],
             'db_user' => $_ENV['DB_USER'],
             'db_pass' => $_ENV['DB_PASS'],
             'db_trust_server_certificate' => $_ENV['DB_TRUST_SERVER_CERTIFICATE'],
+        ];
+
+        // Definir la configuración de la plantilla
+        self::$templateConfig = [
+            'app_name' => 'Admiflow', 
+            'logo_url' => self::$config['base_url'] . '/template/ui8/assets/media/logo.svg',
+            'app_version' => '1.1.0'
         ];
 
         // Cargar configuración adicional desde un archivo si se proporciona
