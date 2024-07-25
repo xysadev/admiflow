@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Index - <?= $pageTitle; ?></title>
+        <title>Income List - <?= $pageTitle; ?></title>
 
 <?= include_layout('template/ui8/layouts/stylesheets.layout.php'); ?>
 
@@ -52,13 +52,13 @@
                         <div class="position-relative container-fluid px-0">
                             <div class="row align-items-center position-relative">
                                 <div class="col-md-8 mb-4 mb-lg-0">
-                                    <h3 class="mb-2">Index</h3>
+                                    <h3 class="mb-2">Income List</h3>
 
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb mb-0">
                                             <li class="breadcrumb-item"><a href="#!">Home</a></li>
                                             <li class="breadcrumb-item active">Pages</li>
-                                            <li class="breadcrumb-item active">Index</li>
+                                            <li class="breadcrumb-item active">Income List</li>
                                         </ol>
                                     </nav>
                                 </div>
@@ -70,7 +70,7 @@
                     <!--//Page content//-->
                     <div class="content p-4 d-flex flex-column-fluid">
                         <div class="container-fluid px-0">
-                          <h5>Welcome back...</h5>
+                          <h5>Content here...</h5>
                           <p></p>
                         </div>
                     </div>

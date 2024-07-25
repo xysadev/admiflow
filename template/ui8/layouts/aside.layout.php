@@ -52,8 +52,16 @@
                               <!--Sidebar nav text-->
                               <span class="sidebar-text">Pages</span>
                             </a>
+
+
                             <ul id="ui-pages" class="sidebar-dropdown list-unstyled collapse show">
+                               <li class="sidebar-item"><a class="sidebar-link" href="index.html">Index</a></li>
+                                                  <li class="sidebar-item"><a class="sidebar-link" href="income-list.html">Income List</a></li>
+                              <li class="sidebar-item"><a class="sidebar-link" href="deliveries-capture.html">Deliveries Capture</a></li>
+
+
                               <li class="sidebar-item">
+
                                 <a href="#pages-account" data-bs-toggle="collapse" aria-expanded="false" class="sidebar-link">
                                   Account
                                 </a>
@@ -62,69 +70,15 @@
                                     <a class="sidebar-link" href="account-general.html">General</a>
                                   </li>
                                   <li class="sidebar-item">
-                                    <a class="sidebar-link" href="account-billing.html">Billing</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="account-contacts.html">Contacts</a>
-                                  </li>
-                                  <li class="sidebar-item">
                                     <a class="sidebar-link" href="account-security.html">Security</a>
                                   </li>
                                   <li class="sidebar-item">
-                                    <a class="sidebar-link" href="account-notifications.html">Notification</a>
+                                    <a class="sidebar-link" href="account-contacts.html">Users</a>
                                   </li>
+                             
                                 </ul>
                               </li>
-                              <li class="sidebar-item">
-                                <a href="#pages-profile" data-bs-toggle="collapse" aria-expanded="false" class="sidebar-link">
-                                  Profile
-                                </a>
-                                <ul id="pages-profile" class="sidebar-dropdown list-unstyled collapse sd-second-level">
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="profile.html">Overview</a>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li class="sidebar-item">
-                                <a href="#pages-authentication" data-bs-toggle="collapse" aria-expanded="false" class="sidebar-link">
-                                  Authentication
-                                </a>
-                                <ul id="pages-authentication" class="sidebar-dropdown list-unstyled collapse sd-second-level">
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="page-auth-signin.html">SignIn</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="page-auth-signup.html">SignUp</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="page-auth-recover-pass.html">Recover password</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="page-auth-success.html">Success</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="page-auth-lockscreen.html">lockscreen</a>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li class="sidebar-item"><a class="sidebar-link" href="page-search.html">Search</a></li>
-                              <li class="sidebar-item"><a class="sidebar-link" href="page-invoice.html">Invoice</a></li>
-                              <li class="sidebar-item"><a class="sidebar-link" href="page-tasks.html">Tasks</a></li>
-                              <li class="sidebar-item"><a class="sidebar-link" href="page-pricing.html">Pricing</a></li>
-                              <li class="sidebar-item">
-                                <a href="#pages-projects" data-bs-toggle="collapse" aria-expanded="false" class="sidebar-link">
-                                  Projects
-                                </a>
-                                <ul id="pages-projects" class="sidebar-dropdown list-unstyled collapse sd-second-level">
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="projects-list.html">List</a>
-                                  </li>
-                                  <li class="sidebar-item">
-                                    <a class="sidebar-link" href="project-detail.html">Details</a>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li class="sidebar-item"><a class="sidebar-link" href="page-404.html">404 Error</a></li>
+                           
                               <li class="sidebar-item"><a class="sidebar-link" href="page-blank.html">Blank Page</a></li>
                             </ul>
                           </li>
@@ -315,12 +269,10 @@
                     <footer class="aside-footer position-relative p-3">
                       <div class="p-3 bg-white bg-white text-dark rounded-3 position-relative overflow-hidden">
                         <div class="position-relative">
-                          <svg class="d-block text-primary mb-2" width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.25c2.487 0 4.773.402 6.466 1.079.844.337 1.577.758 2.112 1.264.536.507.922 1.151.922 1.907v12.987l-.026.013h.026c0 .756-.386 1.4-.922 1.907-.535.506-1.268.927-2.112 1.264-1.693.677-3.979 1.079-6.466 1.079s-4.774-.402-6.466-1.079c-.844-.337-1.577-.758-2.112-1.264C2.886 19.9 2.5 19.256 2.5 18.5h.026l-.026-.013V5.5c0-.756.386-1.4.922-1.907.535-.506 1.268-.927 2.112-1.264C7.226 1.652 9.513 1.25 12 1.25ZM4 14.371v4.116l-.013.013H4c0 .211.103.487.453.817.351.332.898.666 1.638.962 1.475.589 3.564.971 5.909.971 2.345 0 4.434-.381 5.909-.971.739-.296 1.288-.63 1.638-.962.349-.33.453-.607.453-.817h.013L20 18.487v-4.116a7.85 7.85 0 0 1-1.534.8c-1.693.677-3.979 1.079-6.466 1.079s-4.774-.402-6.466-1.079a7.843 7.843 0 0 1-1.534-.8ZM20 12V7.871a7.85 7.85 0 0 1-1.534.8C16.773 9.348 14.487 9.75 12 9.75s-4.774-.402-6.466-1.079A7.85 7.85 0 0 1 4 7.871V12c0 .21.104.487.453.817.35.332.899.666 1.638.961 1.475.59 3.564.972 5.909.972 2.345 0 4.434-.382 5.909-.972.74-.295 1.287-.629 1.638-.96.35-.33.453-.607.453-.818ZM4 5.5c0 .211.103.487.453.817.351.332.898.666 1.638.962 1.475.589 3.564.971 5.909.971 2.345 0 4.434-.381 5.909-.971.739-.296 1.288-.63 1.638-.962.349-.33.453-.607.453-.817 0-.211-.103-.487-.453-.817-.351-.332-.898-.666-1.638-.962-1.475-.589-3.564-.971-5.909-.971-2.345 0-4.434.381-5.909.971-.739.296-1.288.63-1.638.962C4.104 5.013 4 5.29 4 5.5Z">
-
-                          </path></svg>
-                          <p class="mb-0 pb-3">Release your maximal potencial software</p>
+                    
+                          <p class="mb-0 pb-3"></p>
                           <!--Action button-->
-                          <a href="#!.html" class="btn rounded-pill btn-warning text-truncate btn-sm">Upgrade Pro</a>
+                          <a href="#!.html" class="btn rounded-pill btn-warning text-truncate btn-sm"></a>
                         </div>
                       </div>
                     </footer>
