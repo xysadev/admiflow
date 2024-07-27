@@ -38,7 +38,7 @@ class Config
 
         // Asignar variables de entorno a la configuración
         self::$config = [
-            'base_url' => rtrim($_ENV['BASE_URL'], '/'), // Asegurarse de que no termine con '/'
+            'base_url' => rtrim($_ENV['BASE_URL'], '/'),
             'db_host' => $_ENV['DB_HOST'],
             'db_name' => $_ENV['DB_NAME'],
             'db_user' => $_ENV['DB_USER'],
@@ -52,7 +52,7 @@ class Config
         self::$templateConfig = [
             'app_name' => 'Admiflow', 
             'logo_url' => self::$config['base_url'] . '/template/ui8/assets/media/logo.svg',
-            'app_version' => '1.2.1'
+            'app_version' => '1.2.2'
         ];
 
         // Cargar configuración adicional desde un archivo si se proporciona
