@@ -2,10 +2,10 @@
 		<footer class="pb-4">
 		  <div class="container-fluid px-4">
 		    <span class="d-block lh-sm small text-muted text-end">
-		      <?= Config::getTemplateConfig('app_name'); ?> &copy;
-		      <script>
+		      Your ultimate administrative flow solution - <strong><?= Config::getTemplateConfig('app_name'); ?></strong>
+		      <!-- <script>
 		        document.write(new Date().getFullYear())
-		      </script>
+		      </script> -->
 		    </span>
 		    <span class="d-block lh-sm small text-muted text-end">
 		      <?= get_developer_credit(); ?>

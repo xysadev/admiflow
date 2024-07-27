@@ -16,6 +16,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sign In <?= $pageTitle; ?></title>
 		<?= include_layout('template/ui8/layouts/stylesheets.layout.php'); ?>
+           <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    fetch('module/user/actions/check_session.php')
+        .then(response => response.text()) // Cambiado de json() a text() para diagnóstico
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                if (data.loggedIn) {
+                    window.location.href = 'index.html'; // O la página a la que desees redirigir
+                }
+            } catch (e) {
+                console.error('Error al analizar JSON:', e);
+                console.error('Texto recibido:', text); // Mostrar el texto recibido para depuración
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar la sesión:', error);
+        });
+});
+    </script>
     </head>
 
     <body>
@@ -79,39 +99,34 @@
                                         <p class="mb-4 text-muted text-center">
                                             Please Sign In with details...
                                         </p>
-                                        <form action="https://uigator.com/ui8/panel-admin-v2.0/index.html" class=" z-1 position-relative needs-validation" novalidate="">
-                                            <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" required="" id="floatingInput"
-                                                    placeholder="name@example.com">
-                                                <label for="floatingInput">Email address</label>
-                                                <span class="invalid-feedback">Please enter a valid email address</span>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input type="password" required="" class="form-control"
-                                                    id="floatingPassword" placeholder="Password">
-                                                <label for="floatingPassword">Password</label>
-                                                <span class="invalid-feedback">Enter the password</span>
-                                            </div>
-                                    
-                                            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
-                                            <div class="mt-4 mb-3"></div>
-                                         
-                                            <div class="d-flex align-items-center pb-3">
-                                                <span class="flex-grow-1 border-bottom pt-1"></span>
-                                                <span
-                                                    class="d-inline-flex align-items-center justify-content-center lh-1 size-30 rounded-circle text-mono">or</span>
-                                                <span class="flex-grow-1 border-bottom pt-1"></span>
-                                            </div>
-                                            <div class="d-grid">
-                                                <a href="#!"
-                                                    class="d-flex justify-content-center hover-lift btn-secondary btn position-relative center-both">
-                                                   <div class="position-relative d-flex align-items-center">
-                                                        <svg fill="currentColor" class="me-2" width="16" height="16" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
-                                                        <span>sign in with google</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </form>
+                                       <form id="loginForm" class="z-1 position-relative needs-validation" novalidate>
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" required id="floatingInput" name="email" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+        <span class="invalid-feedback">Please enter a valid email address</span>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" required class="form-control" id="floatingPassword" name="pass" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+        <span class="invalid-feedback">Enter the password</span>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign In</button>
+    <div class="mt-4 mb-3"></div>
+    <div class="d-flex align-items-center pb-3">
+        <span class="flex-grow-1 border-bottom pt-1"></span>
+        <span class="d-inline-flex align-items-center justify-content-center lh-1 size-30 rounded-circle text-mono">or</span>
+        <span class="flex-grow-1 border-bottom pt-1"></span>
+    </div>
+    <div class="d-grid">
+        <a href="#!" class="d-flex justify-content-center hover-lift btn-secondary btn position-relative center-both">
+            <div class="position-relative d-flex align-items-center">
+                <svg fill="currentColor" class="me-2" width="16" height="16" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
+                <span>sign in with google</span>
+            </div>
+        </a>
+    </div>
+</form>
+
                                     </div>
                                 </div>
                             </div>
@@ -129,8 +144,52 @@
         
         <!--////////////Theme Core scripts Start/////////////////-->
 <?= include_layout('template/ui8/layouts/coreScripts.layout.php'); ?>
-
         <!--////////////Theme Core scripts End/////////////////-->
+
+        <script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+
+    // Obtén los valores del formulario
+    const email = document.getElementById('floatingInput').value;
+    const pass = document.getElementById('floatingPassword').value;
+
+    // Envía los datos usando fetch
+    fetch('module/user/actions/login_action.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            email: email,
+            pass: pass
+        })
+    })
+    .then(response => {
+        // Verifica si la respuesta es correcta antes de intentar convertirla a JSON
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Login exitoso, redirige al usuario o muestra un mensaje
+            window.location.href = data.redirect;
+        } else {
+            // Muestra el mensaje de error
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un problema con el inicio de sesión.');
+    });
+});
+
+
+</script>
+
 
     </body>
 

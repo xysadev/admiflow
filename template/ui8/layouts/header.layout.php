@@ -1,3 +1,4 @@
+
 <header class="navbar py-0 page-header border-bottom navbar-expand navbar-light px-4">
                       <a href="index.html" class="navbar-brand d-block d-lg-none">
                         <div class="d-flex align-items-center flex-no-wrap text-truncate">
@@ -252,8 +253,8 @@
                             <!--User meta-->
                             <div class="position-relative overflow-hidden p-4 bg-primary-subtle">
                               <div class="position-relative">
-                                <h5 class="mb-1">Adam Milne</h5>
-                                <p class="text-body-tertiary small mb-0 lh-1">Marketing head</p>
+                                <h5 class="mb-1" id="userNameHeader"></h5>
+                                <p class="text-body-tertiary small mb-0 lh-1" id="userRole"></p>
                               </div>
                             </div>
                             <div class="p-2">
@@ -264,12 +265,14 @@
                               <a href="page-tasks.html" class="dropdown-item">
                                 <i class="bi bi-list opacity-75 fs-5 align-middle me-2"></i>Tasks</a>
                               <hr class="mt-3 mb-1">
-                              <a href="page-auth-signin.html" class="dropdown-item d-flex align-items-center">
+                              <a href="#" id="logout-link" class="dropdown-item d-flex align-items-center">
                                 <i class="bi bi-box-arrow-in-right opacity-75 fs-5 align-middle me-2"></i>
                                 Sign out
                               </a>
                             </div>
                           </div>
+
+
                         </li>
                         <li
                           class="nav-item dropdown ms-1 ms-lg-3 d-flex d-lg-none align-items-center justify-content-center flex-column h-100">
