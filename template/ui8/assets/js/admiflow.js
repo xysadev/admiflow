@@ -1,54 +1,93 @@
-$(document).ready(function() {
-    /**
-     * Manejar el evento de clic en el enlace de cierre de sesión.
-     */
-    $('#logout-link').on('click', function(event) {
-        event.preventDefault(); // Prevenir la acción por defecto del enlace
+/**
+ * Admiflow Global JS
+ */
 
-        $.ajax({
-            url: 'module/user/actions/logout.php',
+/* =========================
+   INIT GLOBAL
+========================= */
+window.Admiflow = window.Admiflow || {};
+window.Admiflow.csrfToken = window.Admiflow.csrfToken || null;
+
+/* =========================
+   SECURE FETCH
+========================= */
+window.Admiflow.secureFetch = function (url, options = {}) {
+    if (!window.Admiflow.csrfToken) {
+        throw new Error('CSRF token no inicializado');
+    }
+
+    const headers = Object.assign(
+        {},
+        options.headers || {},
+        {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': window.Admiflow.csrfToken
+        }
+    );
+
+    return fetch(url, Object.assign({}, options, {
+        credentials: 'same-origin',
+        headers
+    }));
+};
+
+$(document).ready(function () {
+
+    /* =========================
+       LOGOUT
+    ========================= */
+    $('#logout-link').on('click', function (event) {
+        event.preventDefault();
+
+        if (!window.Admiflow.csrfToken) {
+            alert('CSRF no inicializado');
+            return;
+        }
+
+        fetch('module/user/actions/logout.php', {
             method: 'POST',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    // Redirigir al usuario a la página de inicio de sesión
-                    window.location.href = response.redirect;
-                } else {
-                    alert('No se pudo cerrar la sesión. Inténtalo de nuevo.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error al cerrar sesión:', error);
-                alert('Ocurrió un error al cerrar sesión.');
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-Token': window.Admiflow.csrfToken
             }
+        })
+        .then(r => r.json())
+        .then(response => {
+            if (response.success) {
+                window.location.href = response.redirect;
+            } else {
+                alert('No se pudo cerrar la sesión');
+            }
+        })
+        .catch(err => {
+            console.error('Error logout:', err);
+            alert('Error al cerrar sesión');
         });
     });
 
-    /**
-     * Obtener el nombre de usuario y rol, y mostrarlo en los elementos correspondientes.
-     */
+    /* =========================
+       INFO USUARIO LOGUEADO
+    ========================= */
     function loadUserInfo() {
         $.ajax({
             url: 'module/user/actions/getUserName.php',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $('#userNameHeader').text(response.username);
                     $('#userRole').text(response.role);
                 } else {
                     $('#userNameHeader').text('Guest');
-                    $('#userRole').text('unknown role');
+                    $('#userRole').text('unknown');
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Error al obtener la información del usuario:', error);
-                $('#userNameHeader').text('Error al obtener la información');
+            error: function () {
+                $('#userNameHeader').text('Error');
                 $('#userRole').text('Error');
             }
         });
     }
 
-    // Llamar a loadUserInfo cuando la página esté lista
     loadUserInfo();
 });

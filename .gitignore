@@ -1,0 +1,22 @@
+# Dependencias
+/vendor/
+/node_modules/
+
+# Entorno
+.env
+.env.*
+
+# Cache / logs
+/system/cache.txt
+/storage/
+*.log
+
+# IDEs
+.idea/
+.vscode/
+
+# Tests / basura
+test.php
+test_db.php
+login_test.php
+admiflow-shit/

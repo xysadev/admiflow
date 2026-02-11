@@ -16,26 +16,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sign In <?= $pageTitle; ?></title>
 		<?= include_layout('template/ui8/layouts/stylesheets.layout.php'); ?>
-           <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     fetch('module/user/actions/check_session.php')
-        .then(response => response.text()) // Cambiado de json() a text() para diagnóstico
-        .then(text => {
-            try {
-                const data = JSON.parse(text);
-                if (data.loggedIn) {
-                    window.location.href = 'index.html'; // O la página a la que desees redirigir
-                }
-            } catch (e) {
-                console.error('Error al analizar JSON:', e);
-                console.error('Texto recibido:', text); // Mostrar el texto recibido para depuración
+        .then(response => response.json()) 
+        .then(data => {
+            if (data.loggedIn) {
+                window.location.href = 'index.html'; 
             }
         })
         .catch(error => {
             console.error('Error al verificar la sesión:', error);
         });
 });
-    </script>
+</script>
     </head>
 
     <body>
@@ -146,53 +140,42 @@
 <?= include_layout('template/ui8/layouts/coreScripts.layout.php'); ?>
         <!--////////////Theme Core scripts End/////////////////-->
 
-        <script>
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+<script>
+document.getElementById('loginForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-    // Obtén los valores del formulario
     const email = document.getElementById('floatingInput').value;
-    const pass = document.getElementById('floatingPassword').value;
+    const pass  = document.getElementById('floatingPassword').value;
 
-    // Envía los datos usando fetch
     fetch('module/user/actions/login_action.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({
-            email: email,
-            pass: pass
-        })
+        body: new URLSearchParams({ email, pass })
     })
-    .then(response => {
-        // Verifica si la respuesta es correcta antes de intentar convertirla a JSON
+    .then(async response => {
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+ 
+            throw new Error(data.message || 'Error desconocido');
         }
-        return response.json();
+
+        return data;
     })
     .then(data => {
-        if (data.success) {
-            // Login exitoso, redirige al usuario o muestra un mensaje
-            window.location.href = data.redirect;
-        } else {
-            // Muestra el mensaje de error
-            alert(data.message);
-        }
+
+        window.location.href = data.redirect;
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un problema con el inicio de sesión.');
+   
+        alert(error.message);
     });
 });
-
-
 </script>
 
 
     </body>
 
-
-<!-- Mirrored from uigator.com/ui8/panel-admin-v2.0/page-auth-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 18 Jul 2024 19:47:53 GMT -->
 </html>

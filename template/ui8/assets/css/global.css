@@ -1,0 +1,4 @@
+.table-responsive.allow-dropdown {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+}

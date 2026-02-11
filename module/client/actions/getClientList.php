@@ -1,33 +1,35 @@
 <?php
-require '../../../vendor/autoload.php';
-require '../../../system/user_functions.php';
 
-use Xysdev\Admiflow\User\User;
+require '../../../vendor/autoload.php';
+require '../../../system/user_functions.php'; 
+
+use Xysdev\Admiflow\Client\Client;
 use Xysdev\Admiflow\Session;
 
 header('Content-Type: application/json');
 
 Session::start();
+Session::requireLogin();
 
 $response = [
     'success' => false,
-    'username' => 'Usuario Desconocido',
-    'role' => 'Desconocido'
+    'data' => [],
+    'message' => ''
 ];
 
 try {
     if ($_SERVER["REQUEST_METHOD"] === "GET") {
-        $userClass = new User();
-        $user = $userClass->getAuthenticatedUser();
 
-        if ($user) {
+        $clientClass = new Client();
+        $clientsList = $clientClass->getClientList();
+
+        if ($clientsList !== false) {
             $response['success'] = true;
-            $response['username'] = htmlspecialchars($user['nombre']);
-            $response['role'] = htmlspecialchars($user['role']);
+            $response['data'] = $clientsList;
         } else {
-            $response['username'] = 'Usuario Desconocido';
-            $response['role'] = 'Desconocido';
+            $response['message'] = 'No se encontraron clientes.';
         }
+
     } else {
         http_response_code(405);
         $response['message'] = 'Método de solicitud no permitido';
@@ -38,4 +40,4 @@ try {
 }
 
 echo json_encode($response);
-?>
+exit;

@@ -163,3 +163,4 @@ function format_date($date, $format = 'Y-m-d H:i:s') {
     $dateTime = new DateTime($date);
     return $dateTime->format($format);
 }
+

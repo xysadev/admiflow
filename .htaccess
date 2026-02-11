@@ -1,13 +1,15 @@
+Options -Indexes
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /admiflow/
 
-    # Redirigir específicamente para extensiones .html
+    # Redirigir específicamente para extensiones .html o .php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.+)\.(html?|php)$ $1.php [NC,L]
 
-    # Permitir acceso a archivos sin extensión específicamente para archivos .php
+    # Permitir acceso a archivos sin extensión cuando existe .php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME}\.php -f

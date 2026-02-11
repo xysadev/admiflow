@@ -27,8 +27,7 @@ class Config
             'DB_USER', 
             'DB_PASS',
             'DB_TRUST_SERVER_CERTIFICATE',
-            'DB_TYPE',
-            'LICENSE_KEY'
+            'DB_TYPE'
         ];
         foreach ($requiredEnvVars as $var) {
             if (empty($_ENV[$var])) {
@@ -44,15 +43,14 @@ class Config
             'db_user' => $_ENV['DB_USER'],
             'db_pass' => $_ENV['DB_PASS'],
             'db_trust_server_certificate' => $_ENV['DB_TRUST_SERVER_CERTIFICATE'],
-            'db_type' => $_ENV['DB_TYPE'],
-            'license_key' => $_ENV['LICENSE_KEY'] 
+            'db_type' => $_ENV['DB_TYPE']
         ];
 
         // Configuración general
         self::$templateConfig = [
             'app_name' => 'Admiflow', 
             'logo_url' => self::$config['base_url'] . '/template/ui8/assets/media/logo.svg',
-            'app_version' => '1.2.2'
+            'app_version' => ''
         ];
 
         // Cargar configuración adicional desde un archivo si se proporciona

@@ -81,4 +81,58 @@ class Session
         self::start();
         return self::has('user_id');
     }
+
+
+
+    /**
+ * Requiere que el usuario esté autenticado
+ * (middleware manual)
+ */
+public static function requireLogin(): void
+{
+    self::start();
+
+    if (!self::is_authenticated()) {
+        http_response_code(401);
+        echo json_encode([
+            'success' => false,
+            'message' => 'No autenticado'
+        ]);
+        exit;
+    }
+}
+
+/**
+ * Genera o devuelve el CSRF token
+ */
+public static function csrfToken(): string
+{
+    self::start();
+
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * Valida el CSRF token recibido
+ */
+public static function requireCsrf(string $token = null): void
+{
+    self::start();
+
+    if (
+        !$token ||
+        !isset($_SESSION['csrf_token']) ||
+        !hash_equals($_SESSION['csrf_token'], $token)
+    ) {
+        throw new \Exception('CSRF token inválido');
+    }
+}
+
+
+
+
 }
