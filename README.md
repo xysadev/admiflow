@@ -1,7 +1,7 @@
 1. Clonar el repositorio
 2. Configurar .env
    
-BASE_URL=http://localhost/admiflow/
+BASE_URL=http://localhost/admiflow/   
 DB_HOST=localhost
 DB_NAME=admif
 DB_USER=root
