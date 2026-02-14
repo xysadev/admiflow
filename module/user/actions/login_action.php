@@ -16,8 +16,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$email = $_POST['email'] ?? '';
-$pass  = $_POST['pass']  ?? '';
+$email = strtolower(trim($_POST['email'] ?? ''));
+$pass  = trim($_POST['pass'] ?? '');
+
+if (empty($email) || empty($pass)) {
+    http_response_code(422);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Email y contraseña son obligatorios'
+    ]);
+    exit;
+}
 
 $user = new User();
 $authenticatedUser = $user->authenticate($email, $pass);
@@ -31,11 +40,13 @@ if (!$authenticatedUser) {
     exit;
 }
 
-// ✅ Login OK
+// 🔐 Seguridad anti session fixation
+Session::start();
+session_regenerate_id(true);
+
 Session::set('user_id', $authenticatedUser['id']);
 Session::set('role', $authenticatedUser['role']);
 
-// 📌 Por ahora todos van al mismo lugar
 echo json_encode([
     'success'  => true,
     'redirect' => 'index.html'

@@ -10,13 +10,14 @@
         },
         "files": [
    
-            "system/xy.php"
+            "system/global_functions.php"
         ]
     },
     "authors": [
         {
-            "name": "Xysad Angel Skyren",
-            "facebook": "@xysad"
+            "name": "Xysad",
+            "email": "contact@xysa.dev",
+            "homepage": "https://github.com/xysadev"
         }
     ],
     "require": {

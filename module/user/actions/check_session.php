@@ -1,42 +1,34 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 require '../../../vendor/autoload.php';
-require '../../../system/user_functions.php';
 
-use Xysdev\Admiflow\Session;
+use Xysdev\Admiflow\Auth;
 
 header('Content-Type: application/json');
 
-// Iniciar la sesión
-Session::start();
-
-$response = [
-    'loggedIn' => false,
-    'username' => 'Usuario Desconocido',
-    'role' => 'Desconocido'
-];
-
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    // Verificar si el usuario está autenticado
-    if (Session::is_authenticated()) {
-        // Usuario autenticado
-        $userClass = new Xysdev\Admiflow\User\User();
-        $user = $userClass->getAuthenticatedUser();
-
-        if ($user) {
-            $response['loggedIn'] = true;
-            $response['username'] = htmlspecialchars($user['nombre']);
-            $response['role'] = htmlspecialchars($user['role']);
-        }
-    }
-} else {
-    // Método de solicitud no permitido
+// Solo GET
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
-    $response['message'] = 'Método de solicitud no permitido';
+    echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido'
+    ]);
+    exit;
 }
 
-echo json_encode($response);
-?>
+// Verificar autenticación
+if (!Auth::check()) {
+    echo json_encode([
+        'loggedIn' => false
+    ]);
+    exit;
+}
+
+// Obtener usuario desde sesión (sin DB)
+$user = Auth::user();
+
+echo json_encode([
+    'loggedIn' => true,
+    'username' => $user['nombre'] ?? 'Usuario',
+    'role' => $user['role'] ?? null
+]);

@@ -106,23 +106,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let table;
     const contentDiv = document.getElementById('pageContent');
 
-    fetch('module/user/actions/getUserName.php')
-        .then(r => r.json())
-        .then(user => {
+    fetch('module/user/actions/check_session.php')
+    .then(r => r.json())
+    .then(user => {
 
-            if (!user.success || !<?= json_encode($allowedRoles); ?>.includes(user.role)) {
-                contentDiv.innerHTML = `
-                    <div class="alert alert-danger">
-                        <h4>Acceso denegado</h4>
-                        <a href="index.php" class="btn btn-primary">Volver</a>
-                    </div>`;
-                throw new Error();
-            }
+        if (!user.loggedIn || !<?= json_encode($allowedRoles); ?>.includes(user.role)) {
+            contentDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <h4>Acceso denegado</h4>
+                    <a href="index.php" class="btn btn-primary">Volver</a>
+                </div>`;
+            throw new Error('Acceso denegado');
+        }
 
-            return fetch('module/client/actions/getClientList.php');
-        })
-        .then(r => r.json())
-        .then(json => render(json.data || []));
+        return fetch('module/client/actions/getClientList.php');
+    })
+    .then(r => r.json())
+    .then(json => render(json.data || []))
+    .catch(err => console.error(err));
+
 
     function render(data) {
 

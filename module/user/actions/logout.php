@@ -1,22 +1,30 @@
 <?php
 
 require '../../../vendor/autoload.php';
-require '../../../system/user_functions.php';
 
+use Xysdev\Admiflow\Auth;
 use Xysdev\Admiflow\Session;
 
-Session::start();
+header('Content-Type: application/json');
 
-// 🔒 validar CSRF antes de destruir
+// 🔐 Solo permitir POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido'
+    ]);
+    exit;
+}
+
+// 🔒 Validar CSRF
 $csrfToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
 Session::requireCsrf($csrfToken);
 
-// destruir sesión
-Session::destroy();
+// 🚪 Logout centralizado
+Auth::logout();
 
-header('Content-Type: application/json');
 echo json_encode([
     'success' => true,
     'redirect' => base_url() . 'signin.html'
 ]);
-exit;

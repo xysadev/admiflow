@@ -9,16 +9,35 @@ class Session
      */
     public static function start()
     {
-        if (session_status() == PHP_SESSION_NONE) {
+        if (session_status() === PHP_SESSION_NONE) {
+
+            // 🔐 Configuración segura
+            ini_set('session.use_strict_mode', 1);
+            ini_set('session.use_only_cookies', 1);
+            ini_set('session.cookie_httponly', 1);
+
+            // Activar secure solo si hay HTTPS
+            if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+                ini_set('session.cookie_secure', 1);
+            }
+
+            ini_set('session.cookie_samesite', 'Strict');
+
             session_start();
         }
     }
 
     /**
+     * Regenerar el ID de sesión (anti session fixation).
+     */
+    public static function regenerate()
+    {
+        self::start();
+        session_regenerate_id(true);
+    }
+
+    /**
      * Establecer una variable de sesión.
-     *
-     * @param string $key
-     * @param mixed $value
      */
     public static function set($key, $value)
     {
@@ -28,9 +47,6 @@ class Session
 
     /**
      * Obtener una variable de sesión.
-     *
-     * @param string $key
-     * @return mixed
      */
     public static function get($key)
     {
@@ -40,9 +56,6 @@ class Session
 
     /**
      * Verificar si una variable de sesión está establecida.
-     *
-     * @param string $key
-     * @return bool
      */
     public static function has($key)
     {
@@ -52,8 +65,6 @@ class Session
 
     /**
      * Eliminar una variable de sesión.
-     *
-     * @param string $key
      */
     public static function delete($key)
     {
@@ -62,19 +73,33 @@ class Session
     }
 
     /**
-     * Destruir la sesión.
+     * Destruir completamente la sesión.
      */
     public static function destroy()
     {
         self::start();
-        session_unset();
+
+        $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
+
         session_destroy();
     }
 
     /**
      * Verificar si el usuario está autenticado.
-     *
-     * @return bool
      */
     public static function is_authenticated()
     {
@@ -82,57 +107,55 @@ class Session
         return self::has('user_id');
     }
 
+    /**
+     * Requiere que el usuario esté autenticado.
+     */
+    public static function requireLogin()
+    {
+        self::start();
 
+        if (!self::is_authenticated()) {
+            http_response_code(401);
+            echo json_encode([
+                'success' => false,
+                'message' => 'No autenticado'
+            ]);
+            exit;
+        }
+    }
 
     /**
- * Requiere que el usuario esté autenticado
- * (middleware manual)
- */
-public static function requireLogin(): void
-{
-    self::start();
+     * Genera o devuelve el CSRF token.
+     */
+    public static function csrfToken()
+    {
+        self::start();
 
-    if (!self::is_authenticated()) {
-        http_response_code(401);
-        echo json_encode([
-            'success' => false,
-            'message' => 'No autenticado'
-        ]);
-        exit;
-    }
-}
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
 
-/**
- * Genera o devuelve el CSRF token
- */
-public static function csrfToken(): string
-{
-    self::start();
-
-    if (!isset($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        return $_SESSION['csrf_token'];
     }
 
-    return $_SESSION['csrf_token'];
-}
+    /**
+     * Valida el CSRF token recibido.
+     */
+    public static function requireCsrf($token = null)
+    {
+        self::start();
 
-/**
- * Valida el CSRF token recibido
- */
-public static function requireCsrf(string $token = null): void
-{
-    self::start();
-
-    if (
-        !$token ||
-        !isset($_SESSION['csrf_token']) ||
-        !hash_equals($_SESSION['csrf_token'], $token)
-    ) {
-        throw new \Exception('CSRF token inválido');
+        if (
+            !$token ||
+            !isset($_SESSION['csrf_token']) ||
+            !hash_equals($_SESSION['csrf_token'], $token)
+        ) {
+            http_response_code(419);
+            echo json_encode([
+                'success' => false,
+                'message' => 'CSRF token inválido'
+            ]);
+            exit;
+        }
     }
-}
-
-
-
-
 }

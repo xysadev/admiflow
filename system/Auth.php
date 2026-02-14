@@ -4,17 +4,69 @@ namespace Xysdev\Admiflow;
 
 class Auth
 {
-    public static function requirePermission(string $permission): void
-    {
-        Session::start();
+    /**
+     * Cache interno de permisos (evita múltiples require).
+     */
+    private static $permissions = null;
 
-        if (!Session::has('user_id')) {
-            self::deny(401, 'No autenticado');
+    /**
+     * Obtiene el mapa de permisos (cacheado).
+     */
+    private static function getPermissions()
+    {
+        if (self::$permissions === null) {
+            self::$permissions = require __DIR__ . '/../config/permissions.php';
         }
 
-        $role = Session::get('role');
+        return self::$permissions;
+    }
 
-        $permissionsMap = require __DIR__ . '/../config/permissions.php';
+    /**
+     * Inicia sesión del usuario.
+     */
+    public static function login(int $userId, string $role)
+    {
+        Session::regenerate();
+
+        Session::set('user_id', $userId);
+        Session::set('role', $role);
+    }
+
+    /**
+     * Cierra sesión.
+     */
+    public static function logout()
+    {
+        Session::destroy();
+    }
+
+    /**
+     * Verifica si el usuario está autenticado.
+     */
+    public static function check()
+    {
+        return Session::is_authenticated();
+    }
+
+    /**
+     * Requiere que el usuario esté autenticado.
+     */
+    public static function requireLogin()
+    {
+        if (!self::check()) {
+            self::deny(401, 'No autenticado');
+        }
+    }
+
+    /**
+     * Requiere que el usuario tenga un permiso específico.
+     */
+    public static function requirePermission(string $permission)
+    {
+        self::requireLogin();
+
+        $role = Session::get('role');
+        $permissionsMap = self::getPermissions();
 
         if (
             !isset($permissionsMap[$role]) ||
@@ -24,13 +76,34 @@ class Auth
         }
     }
 
-    private static function deny(int $code, string $message): void
+    /**
+     * Respuesta uniforme de denegación.
+     */
+    private static function deny(int $code, string $message)
     {
         http_response_code($code);
+
         echo json_encode([
             'success' => false,
             'message' => $message
         ]);
+
         exit;
     }
+
+    /**
+ * Devuelve datos básicos del usuario desde sesión.
+ */
+public static function user(): ?array
+{
+    if (!self::check()) {
+        return null;
+    }
+
+    return [
+        'id' => Session::get('user_id'),
+        'role' => Session::get('role')
+    ];
+}
+
 }

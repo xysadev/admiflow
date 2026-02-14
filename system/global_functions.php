@@ -2,6 +2,7 @@
 
 use Xysdev\Admiflow\Config;
 
+Config::load();
   
 /**
  * Get the base URL of the application.
@@ -164,3 +165,7 @@ function format_date($date, $format = 'Y-m-d H:i:s') {
     return $dateTime->format($format);
 }
 
+
+function get_developer_credit(): string {
+    return 'Powered by <a href="https://fb.com/xysad" target="_blank">Xysad</a>';
+}
